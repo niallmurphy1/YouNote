@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "368253097813",
+    "firebase_url": "https://younote-30999.firebaseio.com",
+    "project_id": "younote-30999",
+    "storage_bucket": "younote-30999.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368253097813:android:84014a5e0700dfe0b901dc",
+        "android_client_info": {
+          "package_name": "com.niall.younote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "368253097813-fb2alodu5tl31e6hb83ugngekgpm3c7o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-HVlL5iixoBqPAn7OpBK0IiChUaeb1Jw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "368253097813-fb2alodu5tl31e6hb83ugngekgpm3c7o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

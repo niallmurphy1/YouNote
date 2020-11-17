@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">YouNote</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="password">password…</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="welcome_please_sign_in_or_register">Welcome! Please Sign in or Register!</string>
+</resources>
