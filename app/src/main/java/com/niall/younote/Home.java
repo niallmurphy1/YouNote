@@ -1,8 +1,13 @@
 package com.niall.younote;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,17 +23,17 @@ import com.niall.younote.entities.User;
 
 public class Home extends AppCompatActivity {
 
-    private TextView mTextView;
     public DatabaseReference dataRef;
     public FirebaseAuth fAuth = FirebaseAuth.getInstance();
     public FirebaseUser fUser = fAuth.getCurrentUser();
     final String userId = fUser.getUid();
+
+    public TextView welcomeText= findViewById(R.id.welcTextView);;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        mTextView = (TextView) findViewById(R.id.text);
 
         dataRef = FirebaseDatabase.getInstance().getReference("User");
 
@@ -36,10 +41,7 @@ public class Home extends AppCompatActivity {
             Log.w("USER", "Nay user ");
 
         }
-
-        String key = dataRef.push().getKey();
         final String uId = fUser.getUid();
-
         dataRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -48,10 +50,15 @@ public class Home extends AppCompatActivity {
 
                     User userObj = snapshot.child(uId).getValue(User.class);
                     String email = userObj.getEmail();
+                    String welcomeString = "Account: " + email;
 
-                    mTextView.setText(email);
+                    Toast.makeText(Home.this, welcomeString, Toast.LENGTH_LONG).show();
 
-                    Log.w("USER", "Email " +  email);
+                    welcomeText.setText(welcomeString);
+                    Log.w("USER", "Email: " +  email);
+
+                    //TODO: add new note and view all notes button
+
 
                 }
             }
@@ -63,8 +70,29 @@ public class Home extends AppCompatActivity {
         });
     }
 
-
-
-
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+    return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+       switch(item.getItemId()){
+           case R.id.item1:
+               this.finish();
+               return  true;
+
+           case R.id.item2:
+               //TODO: Edit Note
+               //do something
+               return  true;
+
+               case R.id.item3:
+                   //TODO: search all notes
+               return  true;
+       }
+        return super.onOptionsItemSelected(item);
+    }
+}

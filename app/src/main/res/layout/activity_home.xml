@@ -11,17 +11,25 @@
 
 
     <TextView
-        android:id="@+id/text"
-        android:layout_width="183dp"
-        android:layout_height="103dp"
-        android:text="@string/hello_world"
+        android:id="@+id/welcTextView"
+        android:layout_width="225dp"
+        android:layout_height="141dp"
         android:textSize="32sp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.217" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcTextView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

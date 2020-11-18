@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onRegisterClick(View view){
 
+        Intent home = new Intent(this, Home.class);
         mAuth.createUserWithEmailAndPassword(getEmailInput(),getPasswordInput()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.w(REGTAG, "Great success!");
+                            startActivity(home);
                         }
                     });
                 }

@@ -40,24 +40,25 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+        emailEdtTxt = findViewById(R.id.editTextTextEmailAddress);
+        pWordEdtTxt = findViewById(R.id.editTextTextPassword);
     }
-
-    @NotNull
-    private String getPasswordInput() {
-        return emailEdtTxt.getText().toString();
-    }
-
     @NotNull
     private String getEmailInput() {
-        return pWordEdtTxt.getText().toString();
+        return emailEdtTxt.getText().toString();
     }
+    @NotNull
+    private String getPasswordInput() {
+        return pWordEdtTxt.getText().toString().trim();
+    }
+
+
 
     public void onLoginBtnClick(View view){
 
-        Intent dash = new Intent(this, Home.class);
+        //TODO: Validate login
 
-        emailEdtTxt = findViewById(R.id.editTextTextEmailAddress);
-        pWordEdtTxt = findViewById(R.id.editTextTextPassword);
+        Intent home = new Intent(this, Home.class);
 
         mAuth.signInWithEmailAndPassword(getEmailInput(), getPasswordInput())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -80,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_LONG).show();
 
 
-                            startActivity(dash);
+                            startActivity(home);
 
 
                             // startActivity(dash);
