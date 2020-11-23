@@ -19,4 +19,7 @@
     -->
     <string name="hello_world">Hello Square World!</string>
     <string name="back">Back</string>
+    <string name="view_notes">View Notes</string>
+    <string name="new_note">New note</string>
+    <string name="action_search">action_search</string>
 </resources>

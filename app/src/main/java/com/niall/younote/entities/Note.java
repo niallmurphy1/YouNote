@@ -6,18 +6,26 @@ import java.sql.SQLOutput;
 
 public class Note {
 
+    private int image;
     private String tag;
     private String body;
 
     public Note(){
-
-
     }
 
-    public Note(String tag, String body){
+    public Note(int image,String tag, String body){
+        this.image = image;
         this.tag = tag;
         this.body = body;
 
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 
     public String getTag() {

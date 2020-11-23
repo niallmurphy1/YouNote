@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,14 +28,17 @@ public class Home extends AppCompatActivity {
     public FirebaseAuth fAuth = FirebaseAuth.getInstance();
     public FirebaseUser fUser = fAuth.getCurrentUser();
     final String userId = fUser.getUid();
+    public Intent noteViewer;
 
-    public TextView welcomeText= findViewById(R.id.welcTextView);;
+//    public TextView welcomeText= findViewById(R.id.welcTextView);;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        noteViewer = new Intent(this, NoteViewer.class);
         dataRef = FirebaseDatabase.getInstance().getReference("User");
 
         if(FirebaseAuth.getInstance().getCurrentUser() == null){
@@ -54,7 +58,7 @@ public class Home extends AppCompatActivity {
 
                     Toast.makeText(Home.this, welcomeString, Toast.LENGTH_LONG).show();
 
-                    welcomeText.setText(welcomeString);
+
                     Log.w("USER", "Email: " +  email);
 
                     //TODO: add new note and view all notes button
@@ -75,6 +79,12 @@ public class Home extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
     return true;
+    }
+
+
+    public void onViewNotesClick(View view){
+
+        startActivity(noteViewer);
     }
 
     @Override
