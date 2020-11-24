@@ -29,9 +29,7 @@ public class NoteViewer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_viewer);
 
-       // myList = (ArrayList<Note>) getIntent().getSerializableExtra("noteList");
-
-
+       myList = (ArrayList<Note>) getIntent().getSerializableExtra("noteList");
 
 
         recycle = findViewById(R.id.recyclerView);
@@ -40,17 +38,10 @@ public class NoteViewer extends AppCompatActivity {
 
         rAdapter = new ExampleAdapter(myList);
 
-
-        int itemCount = rAdapter.getItemCount();
-
-        int arraySize = myList.size();
-
-        int want = itemCount - arraySize;
         recycle.setLayoutManager(rLayoutManager);
         recycle.setAdapter(rAdapter);
         rAdapter.notifyDataSetChanged();
 
-        System.out.println(rAdapter.getItemCount());
 
     }
 

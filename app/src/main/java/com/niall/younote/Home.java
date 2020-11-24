@@ -110,6 +110,8 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
 
                 }
                 noteViewer.putExtra("noteList", userNotes);
+
+                System.out.println(userNotes.toString());
             }
 
             @Override
