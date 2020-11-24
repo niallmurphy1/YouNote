@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     @NotNull
     private String getEmailInput() {
-        return loginEmailEdit.getText().toString();
+        return loginEmailEdit.getText().toString().trim();
     }
 
     public void onRegisterClick(View view){
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     FirebaseUser user = mAuth.getCurrentUser();
                     String userId = user.getUid();
 
-                    User newUser = new User(getEmailInput(), getPasswordInput(), loginPhoneNo.getText().toString());
+                    User newUser = new User(getEmailInput(), getPasswordInput(), loginPhoneNo.getText().toString(), null);
 
                     myRef.child("User").child(userId).setValue(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

@@ -45,11 +45,11 @@ public class LoginActivity extends AppCompatActivity {
     }
     @NotNull
     private String getEmailInput() {
-        return emailEdtTxt.getText().toString();
+        return emailEdtTxt.getText().toString().trim();
     }
     @NotNull
     private String getPasswordInput() {
-        return pWordEdtTxt.getText().toString().trim();
+        return pWordEdtTxt.getText().toString();
     }
 
 
@@ -77,8 +77,8 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithEmail:success: " + key);
 
 
-                            Toast.makeText(LoginActivity.this, userId,
-                                    Toast.LENGTH_LONG).show();
+//                            Toast.makeText(LoginActivity.this, userId,
+//                                    Toast.LENGTH_LONG).show();
 
 
                             startActivity(home);

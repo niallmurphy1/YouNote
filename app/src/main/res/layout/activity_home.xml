@@ -16,6 +16,7 @@
         android:layout_height="179dp"
         android:text="@string/new_note"
         android:padding="4dp"
+        android:onClick="onNewNoteClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.929"

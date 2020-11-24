@@ -6,45 +6,61 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.niall.younote.entities.Note;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 public class NoteViewer extends AppCompatActivity {
 
     private RecyclerView recycle;
-    private RecyclerView.Adapter rAdapter;
     private RecyclerView.LayoutManager rLayoutManager;
+    public ArrayList<Note> myList;
+    private RecyclerView.Adapter rAdapter;
+    public Intent intent;
 
-
-    Note egNote1 = new Note(R.drawable.ic_tick,"TAG1", "This is the first note");
-    Note egNote2 = new Note(R.drawable.ic_tick,"TAG2", "This is the second note");
-    Note egNote3 = new Note(R.drawable.ic_tick,"TAG3", "This is the third note");
-    Note egNote4 = new Note(R.drawable.ic_tick,"TAG4", "This is the fourth note");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_viewer);
 
-        ArrayList<Note> noteList = new ArrayList<>();
-        noteList.add(egNote1);
-        noteList.add(egNote2);
-        noteList.add(egNote3);
-        noteList.add(egNote4);
+       // myList = (ArrayList<Note>) getIntent().getSerializableExtra("noteList");
+
+
+
 
         recycle = findViewById(R.id.recyclerView);
-        //recycle.setHasFixedSize(true);
         rLayoutManager = new LinearLayoutManager(this);
-        rAdapter = new ExampleAdapter(noteList);
 
+
+        rAdapter = new ExampleAdapter(myList);
+
+
+        int itemCount = rAdapter.getItemCount();
+
+        int arraySize = myList.size();
+
+        int want = itemCount - arraySize;
         recycle.setLayoutManager(rLayoutManager);
         recycle.setAdapter(rAdapter);
+        rAdapter.notifyDataSetChanged();
 
-
+        System.out.println(rAdapter.getItemCount());
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myList.clear();
+        rAdapter.notifyDataSetChanged();
+    }
+
+
 }
+

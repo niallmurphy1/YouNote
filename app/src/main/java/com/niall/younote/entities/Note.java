@@ -1,14 +1,28 @@
 package com.niall.younote.entities;
 
+import com.google.firebase.database.Exclude;
+
 import org.w3c.dom.ls.LSOutput;
 
+import java.io.Serializable;
 import java.sql.SQLOutput;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Note {
+public class Note implements Serializable {
 
     private int image;
     private String tag;
     private String body;
+
+    @Exclude
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("tag", tag);
+        result.put("body", body);
+
+        return result;
+    }
 
     public Note(){
     }
