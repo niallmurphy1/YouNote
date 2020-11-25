@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,18 +54,12 @@ public class Settings extends AppCompatActivity {
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot userSnapshot: snapshot.getChildren()) {
-
                         User userObj = snapshot.child(uId).getValue(User.class);
 
                         assert userObj != null;
                         nameView.setText(userObj.getName());
                         phoneView.setText(userObj.getPhoneNO());
 
-
-
-
-                    }
                 }
 
                 @Override
@@ -71,12 +67,60 @@ public class Settings extends AppCompatActivity {
                     Log.w("User", "USER NOT FOUND");
                 }
             });
+    }
 
+    public void onChangeDetailsClick(View v){
 
+        if(nameEdit.getText().toString().equals("") & phoneNumEdit.getText().toString().equals("")){
 
+            Toast.makeText(this, "Please enter values in fields", Toast.LENGTH_SHORT).show();
 
+        }
+        else if (!nameEdit.getText().toString().equals("") & !phoneNumEdit.getText().toString().equals("")){
 
+            changeNameAndPhone();
 
+        }
+        else if(!nameEdit.getText().toString().equals("") & phoneNumEdit.getText().toString().equals("")){
+            changeName();
+        }
+        else if(nameEdit.getText().toString().equals("") & !phoneNumEdit.getText().toString().equals("")){
+
+           changePhone();
+
+        }
 
     }
+
+    public void changeNameAndPhone(){
+
+        String newName = nameEdit.getText().toString();
+
+        String newPhone = phoneNumEdit.getText().toString();
+
+        DatabaseReference fireDB = FirebaseDatabase.getInstance().getReference("User").child(uId);
+        fireDB.child("name").setValue(newName);
+        fireDB.child("phoneNO").setValue(newPhone);
+
+        Toast.makeText(this, "Updated user name: " + newName
+                + "\n Updated user Phone No.: " + newPhone, Toast.LENGTH_SHORT).show();
+    }
+
+    public void changeName(){
+        String newName = nameEdit.getText().toString();
+        DatabaseReference fireDB = FirebaseDatabase.getInstance().getReference("User").child(uId);
+        fireDB.child("name").setValue(newName);
+
+        Toast.makeText(this, "Updated user name: " + newName, Toast.LENGTH_SHORT).show();
+    }
+
+    public void changePhone(){
+
+        String newPhone = phoneNumEdit.getText().toString();
+        DatabaseReference fireDB = FirebaseDatabase.getInstance().getReference("User").child(uId);
+        fireDB.child("phoneNO").setValue(newPhone);
+
+        Toast.makeText(this, "Updated user phone No.: " + newPhone, Toast.LENGTH_SHORT).show();
+    }
+
 }
