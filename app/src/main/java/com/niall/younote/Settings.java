@@ -30,8 +30,6 @@ public class Settings extends AppCompatActivity {
     private DatabaseReference myRef = database.getReference();
     public FirebaseAuth fAuth = FirebaseAuth.getInstance();
     public FirebaseUser fUser = fAuth.getCurrentUser();
-
-
     final String uId = fUser.getUid();
 
     @Override

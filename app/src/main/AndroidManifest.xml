@@ -13,7 +13,7 @@
         android:theme="@style/Theme.YouNote">
         <activity android:name=".Settings"></activity>
         <activity android:name=".NoteViewer" />
-        <activity android:name=".ViewerSearcher" />
+
 
         <uses-library
             android:name="com.google.android.wearable"

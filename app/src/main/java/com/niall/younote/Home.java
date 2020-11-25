@@ -44,6 +44,8 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
 
     public Intent settingsIntent;
 
+    public Intent logoutIntent;
+
     public ArrayList<Note> userNotes;
 
     public static final String TAG = "tag";
@@ -57,6 +59,7 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
 
         noteViewer = new Intent(this, NoteViewer.class);
         settingsIntent  = new Intent(this, Settings.class);
+        logoutIntent = new Intent(this, MainActivity.class);
 
         dataRef = FirebaseDatabase.getInstance().getReference("User");
 
@@ -70,6 +73,7 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
                 for (DataSnapshot userSnapshot: snapshot.getChildren()) {
 
                     User userObj = snapshot.child(uId).getValue(User.class);
+
                     String email = userObj.getEmail();
                     Log.w("USER", "Email: " +  email);
 
@@ -86,19 +90,7 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
 
     }
 
-    public void changeName(){
 
-    }
-
-
-    public void changePhoneNumber(){
-
-    }
-
-    public void displayUserDetails(){
-
-
-    }
     //Update user note list (populate recyclerView)
     public void addUserNotes(){
         DatabaseReference fireDb = FirebaseDatabase.getInstance().getReference("User").child(uId).child("user-notes");
@@ -115,7 +107,7 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
                     if(noteObj == null){break;}
                     else {
                         //System.out.println(noteObj.getTag() + " " + noteObj.getBody());
-                        Note aNote = new Note(R.drawable.ic_tick, noteObj.getTag(), noteObj.getBody());
+                        Note aNote = new Note(noteObj.getImage(), noteObj.getTag(), noteObj.getBody());
                         //System.out.println(aNote.toString());
                         userNotes.add(aNote);
                     }
@@ -178,7 +170,8 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
                 startActivity(settingsIntent);
                return  true;
 
-               case R.id.item3:
+           case R.id.item3:
+                startActivity(logoutIntent);
                return  true;
        }
         return super.onOptionsItemSelected(item);
@@ -190,7 +183,7 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
         Log.w(tag, body);
         System.out.println(tag + body);
 
-        Note note = new Note(R.drawable.ic_tick,tag, body);
+        Note note = new Note(R.drawable.ic_right_arrow,tag, body);
 
         dataRef = FirebaseDatabase.getInstance().getReference();
         String key = dataRef.child("Note").push().getKey();

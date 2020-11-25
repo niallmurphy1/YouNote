@@ -36,6 +36,9 @@ public class Note implements Serializable {
 
     }
 
+    public void changeImage(int newImage){
+        image = newImage;
+    }
     public int getImage() {
         return image;
     }
