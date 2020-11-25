@@ -91,6 +91,7 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
         fireDb.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userNotes.clear();
 
                 for (DataSnapshot noteSnapshot: snapshot.getChildren()){
                     Note noteObj = noteSnapshot.getValue(Note.class);
