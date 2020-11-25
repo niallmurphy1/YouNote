@@ -47,11 +47,6 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
     public static final String TAG = "tag";
     public static final String BODY = "body";
 
-
-
-//    public TextView welcomeText= findViewById(R.id.welcTextView);;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,17 +96,20 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
                     Note noteObj = noteSnapshot.getValue(Note.class);
                     if(noteObj == null){break;}
                     else {
-                        System.out.println(noteObj.getTag() + " " + noteObj.getBody());
+                        //System.out.println(noteObj.getTag() + " " + noteObj.getBody());
                         Note aNote = new Note(R.drawable.ic_tick, noteObj.getTag(), noteObj.getBody());
-                        System.out.println(aNote.toString());
+                        //System.out.println(aNote.toString());
                         userNotes.add(aNote);
                     }
 
 
                 }
                 noteViewer.putExtra("noteList", userNotes);
+                for(int i =0; i<userNotes.size();i++){
+                    System.out.println(userNotes.get(i).toString());
+                }
 
-                System.out.println(userNotes.toString());
+
             }
 
             @Override

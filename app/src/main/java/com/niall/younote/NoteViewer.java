@@ -14,42 +14,49 @@ import com.niall.younote.entities.Note;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.ListIterator;
 
 public class NoteViewer extends AppCompatActivity {
 
     private RecyclerView recycle;
     private RecyclerView.LayoutManager rLayoutManager;
-    public ArrayList<Note> myList;
+    public ArrayList<Note> myList = new ArrayList<>();
     private RecyclerView.Adapter rAdapter;
     public Intent intent;
 
+    public RecyclerView.Adapter ad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_viewer);
 
-       myList = (ArrayList<Note>) getIntent().getSerializableExtra("noteList");
-
-
-        recycle = findViewById(R.id.recyclerView);
-        rLayoutManager = new LinearLayoutManager(this);
-
-
-        rAdapter = new ExampleAdapter(myList);
-
-        recycle.setLayoutManager(rLayoutManager);
-        recycle.setAdapter(rAdapter);
-        rAdapter.notifyDataSetChanged();
+      buildRecyclerView();
 
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        myList.clear();
-        rAdapter.notifyDataSetChanged();
+    public void createList(){
+        ArrayList<Note> noteArrayList = new ArrayList<>();
+
+
+    }
+
+    public void buildRecyclerView() {
+        myList = (ArrayList<Note>) getIntent().getSerializableExtra("noteList");
+        for(int i =0; i<myList.size();i++){
+            System.out.println(myList.get(i).toString());
+        }
+
+        //TODO: FIX THIS STUPID FUCKING ARRAYLIST
+        ListIterator<Note> listItr = myList.listIterator();
+
+        recycle = findViewById(R.id.recyclerView);
+        rLayoutManager = new LinearLayoutManager(this);
+        rAdapter = new ExampleAdapter(myList);
+        recycle.setLayoutManager(rLayoutManager);
+        recycle.setAdapter(rAdapter);
+        rAdapter.notifyItemChanged(myList.size() + 1);
     }
 
 
