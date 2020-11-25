@@ -56,7 +56,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginBtnClick(View view){
 
-        //TODO: Validate login
+        if(getEmailInput().equals("") || getPasswordInput().equals("")){
+
+            Toast.makeText(this, "Please enter your login details", Toast.LENGTH_SHORT).show();
+        }
 
         Intent home = new Intent(this, Home.class);
 

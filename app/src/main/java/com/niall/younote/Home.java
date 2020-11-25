@@ -179,7 +179,6 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
 
     @Override
     public void applyTexts(String tag, String body) {
-            //TODO: add Note object to Firebase
         Log.w(tag, body);
         System.out.println(tag + body);
 

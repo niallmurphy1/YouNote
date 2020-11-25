@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText loginPhoneNo;
     private EditText loginName;
 
+
+
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference();
 
@@ -45,11 +48,31 @@ public class MainActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
+        loginEmailEdit = findViewById(R.id.emailEditText);
         loginName = findViewById(R.id.editTextName);
-        loginEmailEdit = findViewById(R.id.editTextEmail);
-        loginPwordEdit = findViewById(R.id.editTextPassword);
-        loginPhoneNo = findViewById(R.id.editTextPhoneNo);
+        loginPwordEdit = findViewById(R.id.editTextPword);
+        loginPhoneNo = findViewById(R.id.editTextPhone);
 
+
+
+
+
+    }
+
+    private void validatePassword(){
+        if(getPasswordInput().length() < 6){
+            Toast.makeText(this, "Your password must be at least 6 characters in length!", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private boolean validateEmail() {
+        String emailInput = loginEmailEdit.getText().toString().trim();
+        if (emailInput.isEmpty()) {
+            loginEmailEdit.setError("Field can't be empty");
+            return false;
+        } else {
+            loginEmailEdit.setError(null);
+            return true;
+        }
     }
 
     @Override
@@ -76,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onRegisterClick(View view){
+
+        System.out.println(getEmailInput());
+        validateEmail();
 
         Intent home = new Intent(this, Home.class);
         mAuth.createUserWithEmailAndPassword(getEmailInput(),getPasswordInput()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
