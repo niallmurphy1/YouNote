@@ -6,6 +6,7 @@ public class User {
 
     private String email;
     private String password;
+    private String name;
     private String phoneNO;
     private ArrayList<Note> myNotes;
 
@@ -14,11 +15,21 @@ public class User {
 
     }
 
-    public User(String email, String password, String phoneNO, ArrayList<Note> myNotes) {
+    public User(String email, String password, String name, String phoneNO, ArrayList<Note> myNotes) {
         this.email = email;
         this.password = password;
+        this.name = name;
         this.phoneNO = phoneNO;
         this.myNotes = myNotes;
+    }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public ArrayList<Note> getMyNotes() {

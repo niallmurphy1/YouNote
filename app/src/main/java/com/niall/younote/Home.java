@@ -42,6 +42,8 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
 
     final String uId = fUser.getUid();
 
+    public Intent settingsIntent;
+
     public ArrayList<Note> userNotes;
 
     public static final String TAG = "tag";
@@ -54,6 +56,8 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
 
 
         noteViewer = new Intent(this, NoteViewer.class);
+        settingsIntent  = new Intent(this, Settings.class);
+
         dataRef = FirebaseDatabase.getInstance().getReference("User");
 
         if(FirebaseAuth.getInstance().getCurrentUser() == null){
@@ -82,6 +86,19 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
 
     }
 
+    public void changeName(){
+
+    }
+
+
+    public void changePhoneNumber(){
+
+    }
+
+    public void displayUserDetails(){
+
+
+    }
     //Update user note list (populate recyclerView)
     public void addUserNotes(){
         DatabaseReference fireDb = FirebaseDatabase.getInstance().getReference("User").child(uId).child("user-notes");
@@ -158,12 +175,10 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
                return  true;
 
            case R.id.item2:
-               //TODO: Edit Note
-               //do something
+                startActivity(settingsIntent);
                return  true;
 
                case R.id.item3:
-                   //TODO: search all notes
                return  true;
        }
         return super.onOptionsItemSelected(item);

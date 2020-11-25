@@ -22,4 +22,9 @@
     <string name="view_notes">View Notes</string>
     <string name="new_note">New note</string>
     <string name="action_search">action_search</string>
+    <string name="enter_new_phone">Enter new phone</string>
+    <string name="enter_new_name">Enter new name</string>
+    <string name="change_details">Change details</string>
+    <string name="enter_your_new_details_in_the_fields_below">Enter your new details in the fields below</string>
+    <string name="name">Name</string>
 </resources>

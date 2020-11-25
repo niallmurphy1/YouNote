@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText loginEmailEdit;
     private EditText loginPwordEdit;
     private EditText loginPhoneNo;
+    private EditText loginName;
+
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference();
 
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
+        loginName = findViewById(R.id.editTextName);
         loginEmailEdit = findViewById(R.id.editTextEmail);
         loginPwordEdit = findViewById(R.id.editTextPassword);
         loginPhoneNo = findViewById(R.id.editTextPhoneNo);
@@ -55,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
        // updateUI(currentUser);
+    }
+
+    @NotNull
+    private String getNameInput() {
+        return loginName.getText().toString().trim();
     }
 
     @NotNull
@@ -79,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     FirebaseUser user = mAuth.getCurrentUser();
                     String userId = user.getUid();
 
-                    User newUser = new User(getEmailInput(), getPasswordInput(), loginPhoneNo.getText().toString(), null);
+                    User newUser = new User(getEmailInput(), getPasswordInput(),getNameInput(), loginPhoneNo.getText().toString(), null);
 
                     myRef.child("User").child(userId).setValue(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
