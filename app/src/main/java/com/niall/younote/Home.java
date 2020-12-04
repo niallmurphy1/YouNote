@@ -40,6 +40,10 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
     public FirebaseUser fUser = fAuth.getCurrentUser();
     public Intent noteViewer;
 
+    private TextView welcTxt;
+
+
+
     final String uId = fUser.getUid();
 
     public Intent settingsIntent;
@@ -56,6 +60,7 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        welcTxt = findViewById(R.id.welcTextView);
 
         noteViewer = new Intent(this, NoteViewer.class);
         settingsIntent  = new Intent(this, Settings.class);
@@ -76,6 +81,8 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
 
                     String email = userObj.getEmail();
                     Log.w("USER", "Email: " +  email);
+                    welcTxt.setText("Welcome " + userObj.getEmail() + "!\n"
+                    + "Add and view notes by using the two buttons below.".toString());
 
                 }
             }
@@ -86,6 +93,11 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
             }
         });
 
+
+
+
+
+
         addUserNotes();
 
     }
@@ -94,6 +106,8 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
     //Update user note list (populate recyclerView)
     public void addUserNotes(){
         DatabaseReference fireDb = FirebaseDatabase.getInstance().getReference("User").child(uId).child("user-notes");
+
+
 
         userNotes = new ArrayList<>();
 
@@ -104,13 +118,25 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
 
                 for (DataSnapshot noteSnapshot: snapshot.getChildren()){
                     Note noteObj = noteSnapshot.getValue(Note.class);
+                    String key = dataRef.push().getKey();
                     if(noteObj == null){break;}
-                    else {
+
+                    else if(noteObj.isChecked()){
                         //System.out.println(noteObj.getTag() + " " + noteObj.getBody());
-                        Note aNote = new Note(noteObj.getImage(), noteObj.getTag(), noteObj.getBody());
+                        Note aNote = new Note(noteObj.getTag(), noteObj.getBody(), noteObj.isChecked());
+
+                        aNote.setNoteId(key);
                         //System.out.println(aNote.toString());
                         userNotes.add(aNote);
                     }
+                    else{
+                        Note aNote = new Note(noteObj.getTag(), noteObj.getBody(), noteObj.isChecked());
+                        aNote.setNoteId(key);
+
+                        userNotes.add(aNote);
+
+                    }
+
 
 
                 }
@@ -182,15 +208,19 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
         Log.w(tag, body);
         System.out.println(tag + body);
 
-        Note note = new Note(R.drawable.ic_right_arrow,tag, body);
+        Note note = new Note(tag, body, false);
 
         dataRef = FirebaseDatabase.getInstance().getReference();
         String key = dataRef.child("Note").push().getKey();
+
+        note.setNoteId(key);
 
         dataRef.child("Note").child(key).setValue(note).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.w("NOTE", "Key: " + key + ", " + note.toString()+ " Successfully added");
+                Log.w("NOTE", "Key: " + note.getNoteId());
+                System.out.println("Key: " + note.getNoteId() );
             }
         });
 
@@ -204,9 +234,11 @@ public class Home extends AppCompatActivity implements NewNoteDialog.NewNoteDial
 
         Map<String, Object> childUpdates = new HashMap<>();
 
-        dataRef = FirebaseDatabase.getInstance().getReference("User");
+        dataRef = FirebaseDatabase.getInstance().getReference("User").child(uId).child("user-notes").child(key);
 
         childUpdates.put(userId + "/user-notes/" + key, noteValues);
+
+        dataRef.child("checked").setValue(false);
 
         dataRef.updateChildren(childUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

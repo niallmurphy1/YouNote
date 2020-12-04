@@ -71,7 +71,15 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
     @Override
     public void onBindViewHolder(ExampleViewHolder holder, int position) {
         Note currentNote = myList.get(position);
-        holder.mImageView.setImageResource(currentNote.getImage());
+        if(currentNote.isChecked()){
+            holder.mImageView.setImageResource(R.drawable.ic_tick);
+        }
+        else if(!currentNote.isChecked()){
+            holder.mImageView.setImageResource(R.drawable.ic_right_arrow);
+        }
+        else {
+            holder.mImageView.setImageResource(R.drawable.ic_right_arrow);
+        }
         holder.tagText.setText(currentNote.getTag());
         holder.bodyText.setText(currentNote.getBody());
     }
@@ -113,6 +121,9 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
 
             myList.clear();
             myList.addAll((ArrayList) results.values);
+//            for(int i = 0; i < myList.size(); i++){
+//                if(myList.get(i).get)
+//            }
             notifyDataSetChanged();
         }
     };

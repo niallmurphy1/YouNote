@@ -4,22 +4,34 @@ import androidx.annotation.NonNull;
 
 import com.google.firebase.database.Exclude;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.io.Serializable;
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Note implements Serializable {
 
-    private int image;
+
+
     private String tag;
     private String body;
+    private boolean isChecked = false;
+
+    public String getNoteId() {
+        return noteId;
+    }
+
+    public void setNoteId(String noteId) {
+        this.noteId = noteId;
+    }
+
+    private String noteId;
+
+
 
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
+
         result.put("tag", tag);
         result.put("body", body);
 
@@ -29,22 +41,21 @@ public class Note implements Serializable {
     public Note() {
     }
 
-    public Note(int image, String tag, String body) {
-        this.image = image;
+    public Note( String tag, String body, boolean isChecked) {
+
         this.tag = tag;
         this.body = body;
+        this.isChecked = isChecked;
 
     }
 
-    public void changeImage(int newImage){
-        image = newImage;
-    }
-    public int getImage() {
-        return image;
+
+    public boolean isChecked() {
+        return isChecked;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 
     public String getTag() {

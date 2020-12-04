@@ -15,7 +15,7 @@
         android:layout_width="185dp"
         android:layout_height="179dp"
         android:text="@string/new_note"
-        android:padding="4dp"
+
         android:onClick="onNewNoteClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,28 +26,30 @@
 
     <TextView
         android:id="@+id/welcTextView"
-        android:layout_width="225dp"
-        android:layout_height="141dp"
-        android:textSize="32sp"
-        android:visibility="visible"
+        android:layout_width="238dp"
+        android:layout_height="215dp"
+        android:text="@string/welcome_use_the_buttons_below_to_view_add_notes"
+        android:textColor="@color/black"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.332" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="185dp"
         android:layout_height="179dp"
-        android:text="@string/view_notes"
         android:onClick="onViewNotesClick"
         android:padding="4dp"
+        android:text="@string/view_notes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintHorizontal_bias="0.07"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcTextView"
-        app:layout_constraintVertical_bias="0.864" />
+        app:layout_constraintVertical_bias="0.865" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

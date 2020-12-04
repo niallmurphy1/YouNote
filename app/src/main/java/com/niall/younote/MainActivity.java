@@ -59,14 +59,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void validatePassword(){
-        if(getPasswordInput().length() < 6){
-            Toast.makeText(this, "Your password must be at least 6 characters in length!", Toast.LENGTH_SHORT).show();
+
+    private boolean validate() {
+        String emailInput = loginEmailEdit.getText().toString().trim();
+        if (loginEmailEdit.toString().equals("") || loginName.toString().equals("")
+                || loginPwordEdit.toString().equals("") || loginPhoneNo.toString().equals("")) {
+            loginEmailEdit.setError("Field can't be empty");
+            Toast.makeText(this, "Fields can't be empty!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            loginEmailEdit.setError(null);
+            return true;
         }
     }
+
     private boolean validateEmail() {
         String emailInput = loginEmailEdit.getText().toString().trim();
-        if (emailInput.isEmpty()) {
+        if (emailInput.equals("")) {
             loginEmailEdit.setError("Field can't be empty");
             return false;
         } else {
@@ -98,42 +107,44 @@ public class MainActivity extends AppCompatActivity {
         return loginEmailEdit.getText().toString().trim();
     }
 
-    public void onRegisterClick(View view){
+    public void onRegisterClick(View view) {
 
         System.out.println(getEmailInput());
         validateEmail();
 
-        Intent home = new Intent(this, Home.class);
-        mAuth.createUserWithEmailAndPassword(getEmailInput(),getPasswordInput()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Log.d(TAG, "createUserWithEmail:success");
+        if (getPasswordInput().length() < 6) {
+            Toast.makeText(this, "Your password must be at least 6 characters in length!", Toast.LENGTH_SHORT).show();
+        } else {
 
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    String userId = user.getUid();
+            Intent home = new Intent(this, Home.class);
+            mAuth.createUserWithEmailAndPassword(getEmailInput(), getPasswordInput()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "createUserWithEmail:success");
 
-                    User newUser = new User(getEmailInput(), getPasswordInput(),getNameInput(), loginPhoneNo.getText().toString(), null);
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        String userId = user.getUid();
 
-                    myRef.child("User").child(userId).setValue(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.w(REGTAG, "Great success!");
-                            startActivity(home);
-                        }
-                    });
+                        User newUser = new User(getEmailInput(), getPasswordInput(), getNameInput(), loginPhoneNo.getText().toString(), null);
+
+                        myRef.child("User").child(userId).setValue(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.w(REGTAG, "Great success!");
+                                startActivity(home);
+                            }
+                        });
+                    } else {
+                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        Toast.makeText(MainActivity.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+
+
+                    }
                 }
-                else{
-                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(MainActivity.this, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show();
-
-
-
-
-                }
-            }
-        });
+            });
+        }
     }
 
     public void onLoginClick(View view){

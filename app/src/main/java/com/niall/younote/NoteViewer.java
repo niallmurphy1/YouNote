@@ -44,15 +44,17 @@ public class NoteViewer extends AppCompatActivity {
         setContentView(R.layout.activity_note_viewer);
 
       buildRecyclerView();
+      //updateNotes();
+       // deleteItem();
 
 
     }
 
 
-    public void changeIcon(int position, int image){
-        myList.get(position).changeImage((image));
-        rAdapter.notifyItemChanged(position);
-    }
+//    public void changeIcon(int position, int image){
+//        myList.get(position).changeImage((image));
+//        rAdapter.notifyItemChanged(position);
+//    }
 
     public void buildRecyclerView() {
         myList = (ArrayList<Note>) getIntent().getSerializableExtra("noteList");
@@ -93,50 +95,66 @@ public class NoteViewer extends AppCompatActivity {
         return true;
     }
 
-    public void updateNotes(){
-        rAdapter.setOnItemClickListener(position -> changeIcon(position, R.drawable.ic_tick));
+    public void deleteItem(){
+
+
 
         rAdapter.setOnItemClickListener(new ExampleAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                changeIcon(position, R.drawable.ic_tick);
-                myList.get(position).setImage(R.drawable.ic_tick);
+                myList.remove(myList.get(position));
+
+                myRef = FirebaseDatabase.getInstance().getReference("User").child(uId).child("user-notes")
+                        .child(myList.get(position).getNoteId());
+
+                System.out.println(myList.get(position).getNoteId().toString());
+
+                myRef.removeValue();
+
                 rAdapter.notifyDataSetChanged();
-                rAdapter.notifyItemChanged(position);
-
-
-                myRef = FirebaseDatabase.getInstance().getReference("User").child(uId).child("user-notes");
-
-                myRef.addValueEventListener( new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-                        for (DataSnapshot noteSnapshot: snapshot.getChildren()){
-                            Note noteObj = noteSnapshot.getValue(Note.class);
-                            assert noteObj != null;
-                            if(myList.get(position).getBody().equals(noteObj.getBody().toString())){
-                                noteObj.setImage(R.drawable.ic_tick);
-                                myList.get(position).setImage(R.drawable.ic_tick);
-                                rAdapter.notifyItemChanged(position);
-                                rAdapter.notifyDataSetChanged();
-                            }
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-
 
 
             }
         });
     }
+
+
+
+//    public void updateNotes(){
+//
+//
+//        rAdapter.setOnItemClickListener(new ExampleAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int position) {
+//
+//                rAdapter.notifyDataSetChanged();
+//                rAdapter.notifyItemChanged(position);
+//                boolean bool = true;
+//
+//                myList.get(position).setChecked(bool);
+//               String body =  myList.get(position).getTag();
+//                String tag = myList.get(position).getBody();
+//
+//
+//
+//                myRef = FirebaseDatabase.getInstance().getReference("User").child(uId).child("user-notes")
+//                        .child(myList.get(position).getNoteId());
+//
+//                myRef.child("checked").setValue(bool);
+//                myRef.child("body").setValue(body);
+//                myRef.child("tag").setValue(tag);
+//
+//                rAdapter.notifyDataSetChanged();
+//
+//                myList.clear();
+//
+//
+//
+//
+//
+//            }
+//        });
+//    }
 
 
 

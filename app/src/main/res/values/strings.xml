@@ -27,4 +27,5 @@
     <string name="change_details">Change details</string>
     <string name="enter_your_new_details_in_the_fields_below">Enter your new details in the fields below</string>
     <string name="name">Name</string>
+    <string name="welcome_use_the_buttons_below_to_view_add_notes">Welcome! Use the buttons below to view/add notes!</string>
 </resources>
